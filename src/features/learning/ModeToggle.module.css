@@ -1,0 +1,41 @@
+.root {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+
+.button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.button:hover:not(.active) {
+  color: var(--text-primary);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}

@@ -1,0 +1,544 @@
+.root {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+/* --- Intro bar ---------------------------------------------- */
+
+.introBar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-sm);
+  background: var(--surface-0);
+  color: var(--text-tertiary);
+  font-size: 0.76rem;
+  flex-wrap: wrap;
+}
+
+.introLabel {
+  font-family: var(--font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.introFlow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+/* --- Header ------------------------------------------------ */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.progressLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.completedTag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--text-quaternary);
+  text-transform: lowercase;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.difficulty,
+.type {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border: 1px solid;
+  border-radius: var(--radius-pill);
+  line-height: 1;
+}
+
+.diff-intro {
+  color: var(--ok);
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+
+.diff-core {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.diff-advanced {
+  color: var(--warn);
+  border-color: var(--warn);
+  background: var(--warn-soft);
+}
+
+.type-prediction,
+.type-comparison,
+.type-diagnosis,
+.type-conceptual {
+  color: var(--text-secondary);
+  border-color: var(--border-medium);
+  background: var(--surface-2);
+}
+
+.title {
+  margin: 0.2rem 0 0;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.goal {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* --- Section shells ---------------------------------------- */
+
+.prompt,
+.expected,
+.answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-0);
+}
+
+.expected {
+  background: var(--accent-muted);
+  border-color: var(--accent);
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.prompt p,
+.expected p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* --- Apply button ------------------------------------------ */
+
+.applyButton {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    transform var(--t-fast);
+  font-weight: 500;
+}
+
+.applyButton:hover {
+  background: var(--accent);
+  color: var(--surface-0);
+}
+
+.applyButton:active {
+  transform: translateY(0.5px);
+}
+
+.applyButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* --- Answer options ---------------------------------------- */
+
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.optionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    color var(--t-fast);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.option:hover:not(.optionRevealed) {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.optionSelected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.optionCorrect {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+  color: var(--text-primary);
+}
+
+.optionIncorrect {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+  color: var(--text-primary);
+}
+
+.optionRevealed {
+  cursor: default;
+}
+
+.option:focus-within {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.optionText {
+  flex: 1;
+  line-height: 1.45;
+}
+
+.optionIcon {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  min-width: 1rem;
+  text-align: center;
+}
+
+.optionCorrect .optionIcon {
+  color: var(--ok);
+}
+
+.optionIncorrect .optionIcon {
+  color: var(--warn);
+}
+
+.optionFeedback {
+  margin: 0;
+  padding: 0.3rem 0.85rem 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* --- Check / explanation ----------------------------------- */
+
+.checkButton {
+  align-self: flex-start;
+  padding: 0.45rem 0.95rem;
+  font-family: inherit;
+  font-size: 0.84rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.checkButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.checkButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.explanation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.8rem 0.95rem;
+  background: var(--surface-1);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.explanationLabel {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.explanation p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* --- Related concepts + lessons ---------------------------- */
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.chip:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.chip:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.lessonList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.lessonRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color var(--t-fast),
+    background var(--t-fast);
+  font-family: inherit;
+  text-align: left;
+}
+
+.lessonRow:hover {
+  border-color: var(--accent);
+  background: var(--accent-muted);
+}
+
+.lessonRow:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.lessonOrder {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.lessonTitle {
+  color: var(--text-primary);
+  font-size: 0.87rem;
+  line-height: 1.4;
+}
+
+.lessonArrow {
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+
+/* --- Nav --------------------------------------------------- */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.navButton {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.84rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.navButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.navButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.navButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.navCount {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 700px) {
+  .root {
+    padding: 1.2rem 1.1rem;
+    gap: 1rem;
+  }
+
+  .progressRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,433 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  margin: 0 0 0.15rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+/* Shared fieldset shell */
+.familyGroup,
+.observableGroup,
+.topologyGroup {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* --- Topology pill row --------------------------------------- */
+
+.topologyRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.topologyPill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast),
+    transform var(--t-fast);
+  line-height: 1.2;
+  min-height: 2.4em;
+  font-weight: 500;
+}
+
+.topologyPill:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.topologyPill:focus-within {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.topologyPill:active {
+  transform: translateY(0.5px);
+}
+
+.legend {
+  font-size: 0.87rem;
+  color: var(--text-primary);
+  padding: 0;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+/* --- Family pill grid ---------------------------------------- */
+
+.pillGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.55rem 0.5rem;
+  font-size: 0.77rem;
+  color: var(--text-secondary);
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast),
+    transform var(--t-fast);
+  line-height: 1.2;
+  min-height: 2.4em;
+}
+
+.pill:hover {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.pill:focus-within {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.pill:active {
+  transform: translateY(0.5px);
+}
+
+.pillActive {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+.pillGrid > .pill:nth-child(5):last-child {
+  grid-column: span 2;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.familyDescription,
+.observableDescription {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  font-family: var(--font-sans);
+}
+
+/* --- Observable native select -------------------------------- */
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+}
+
+.select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 2rem 0.55rem 0.8rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  line-height: 1.3;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.select:hover {
+  border-color: var(--border-medium);
+  background: var(--surface-1);
+}
+
+.select:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+  border-color: var(--accent);
+}
+
+.selectCaret {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-tertiary);
+  font-size: 0.8rem;
+}
+
+/* --- Demo toggle -------------------------------------------- */
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.toggle {
+  width: 42px;
+  height: 24px;
+  border-radius: var(--radius-pill);
+  background: var(--toggle-off);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.toggleOn {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--t-med);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(18px);
+}
+
+/* --- Range field -------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.fieldLabel {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.fieldValue {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  height: 22px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--surface-0);
+  border-radius: 2px;
+  border: 1px solid var(--border-subtle);
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface-1);
+  margin-top: -7px;
+  box-shadow: 0 0 0 1px var(--accent-soft);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px var(--accent-soft), 0 0 0 1px var(--accent-strong);
+}
+
+.slider::-moz-range-track {
+  height: 4px;
+  background: var(--surface-0);
+  border-radius: 2px;
+  border: 1px solid var(--border-subtle);
+}
+
+.slider::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--surface-1);
+  box-shadow: 0 0 0 1px var(--accent-soft);
+  cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* --- Reset + note ------------------------------------------- */
+
+.resetButton {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    border-color var(--t-fast);
+  font-family: inherit;
+  align-self: flex-start;
+  letter-spacing: 0.01em;
+}
+
+.resetButton:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.resetButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.note {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  line-height: 1.55;
+  margin: 0.25rem 0 0;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.9rem;
+}
+
+.atlasLink {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(106, 167, 255, 0.5);
+  transition: color var(--t-fast), border-color var(--t-fast);
+  line-height: 1.3;
+}
+
+.atlasLink:hover {
+  color: var(--accent-strong);
+  border-bottom-color: var(--accent);
+}
+
+.atlasLink:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* Inline explainer sitting between the reset buttons and the destructive
+   link, so the distinction between "Clean start" and "Reset all progress"
+   is readable without having to hover each button for a tooltip. */
+.resetHint {
+  margin: -0.2rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+}
+
+/* Secondary, destructive action — same link-style footprint as `.atlasLink`
+   but warn-tinted so it reads as "careful" without needing a full button. */
+.dangerLink {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--warn);
+  font-family: inherit;
+  font-size: 0.76rem;
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(232, 165, 114, 0.4);
+  transition: color var(--t-fast), border-color var(--t-fast);
+  line-height: 1.3;
+}
+
+.dangerLink:hover {
+  color: var(--warn);
+  border-bottom-color: var(--warn);
+}
+
+.dangerLink:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}

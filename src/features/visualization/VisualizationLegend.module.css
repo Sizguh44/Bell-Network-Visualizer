@@ -1,0 +1,80 @@
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.5rem 1.1rem;
+  padding: 0.8rem 1rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.swatches {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.strokeDemo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 32px;
+  align-items: center;
+}
+
+.stroke {
+  display: inline-block;
+  width: 28px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+.strokeFaint {
+  opacity: 0.3;
+  height: 1.5px;
+}
+
+.strokeBold {
+  height: 3px;
+  background: var(--accent);
+}
+
+.highlightDemo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.highlightDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 0 0 5px rgba(106, 167, 255, 0.05);
+}

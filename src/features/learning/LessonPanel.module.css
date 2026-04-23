@@ -1,0 +1,523 @@
+.root {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.6rem 1.8rem;
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --- Header --------------------------------------------------- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progressLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.progressBar {
+  flex: 1;
+  height: 3px;
+  background: var(--surface-0);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-strong) 100%);
+  border-radius: inherit;
+  transition: width var(--t-slow);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.goal {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0.2rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text-tertiary);
+  background: var(--surface-2);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.tag:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.tag:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* --- Body narrative ----------------------------------------- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.paragraph {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.96rem;
+  max-width: 72ch;
+}
+
+/* --- Callouts ---------------------------------------------- */
+
+.callouts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* --- Section shell (action + checkpoint) --------------------- */
+
+.action,
+.checkpoint {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-0);
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+/* Action block */
+
+.actionPrompt {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.applyButton {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    color var(--t-fast),
+    transform var(--t-fast);
+  font-weight: 500;
+}
+
+.applyButton:hover {
+  background: var(--accent);
+  color: var(--surface-0);
+}
+
+.applyButton:active {
+  transform: translateY(0.5px);
+}
+
+.applyButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+/* Checkpoint block */
+
+.question {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.optionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  cursor: pointer;
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    color var(--t-fast);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.option:hover:not(.optionRevealed) {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.optionSelected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.optionCorrect {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+  color: var(--text-primary);
+}
+
+.optionIncorrect {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+  color: var(--text-primary);
+}
+
+.optionRevealed {
+  cursor: default;
+}
+
+.option:focus-within {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.optionText {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.optionIcon {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  min-width: 1rem;
+  text-align: center;
+}
+
+.optionCorrect .optionIcon {
+  color: var(--ok);
+}
+
+.optionIncorrect .optionIcon {
+  color: var(--warn);
+}
+
+.optionFeedback {
+  margin: 0;
+  padding: 0.3rem 0.85rem 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.revealButton {
+  align-self: flex-start;
+  padding: 0.45rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.revealButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.revealButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.revealButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.explanation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface-1);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.explanationLabel {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.explanation p {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* --- Nav --------------------------------------------------- */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.navButton {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.84rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.navButton:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.navButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.navButton:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.navCount {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+/* --- Next steps (recommendations) ------------------------------ */
+
+.nextSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.nextSteps .sectionLabel {
+  color: var(--accent);
+}
+
+.nextList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nextRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.nextRow:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.nextRow:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.nextTag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0.22rem 0.55rem;
+  border: 1px solid var(--accent-soft);
+  border-radius: var(--radius-pill);
+  background: var(--accent-muted);
+  white-space: nowrap;
+}
+
+.nextBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.nextKind {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.nextTitle {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.nextArrow {
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  line-height: 1;
+  transition: color var(--t-fast), transform var(--t-fast);
+}
+
+.nextRow:hover .nextArrow {
+  color: var(--accent);
+  transform: translateX(2px);
+}
+
+@media (max-width: 700px) {
+  .root {
+    padding: 1.2rem 1.1rem;
+    gap: 1rem;
+  }
+
+  .progressRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,47 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  line-height: 1;
+}
+
+.button {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  background: transparent;
+  color: var(--text-tertiary);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    background var(--t-fast);
+  line-height: 1;
+}
+
+.button:hover {
+  color: var(--text-primary);
+  background: var(--surface-3);
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.active {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.active:hover {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}

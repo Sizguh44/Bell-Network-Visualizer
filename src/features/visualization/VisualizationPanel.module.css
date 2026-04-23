@@ -1,0 +1,177 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.2rem;
+}
+
+.headerLead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 0.4rem 0.75rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+
+.statusDot,
+.statusDotOff {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.statusDot {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  animation: dot-pulse 2.4s ease-in-out infinite;
+}
+
+.statusDotOff {
+  background: transparent;
+  border: 1px solid var(--border-medium);
+}
+
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); }
+  50% { box-shadow: 0 0 0 4px var(--accent-soft); }
+}
+
+.canvas {
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 50% 42%, #131821 0%, var(--surface-0) 72%),
+    var(--surface-0);
+  padding: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 340px;
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-subtle),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* Academic corner markers — feels like a viewport, not just a box. */
+.canvas::before,
+.canvas::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--border-medium);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.canvas::before {
+  top: 10px;
+  left: 10px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.canvas::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+.canvasHint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: rgba(10, 13, 18, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+  /* Long TR copy ("İncelemek için bir face pair'ın üzerine gel veya tıkla")
+     needs a max-width + soft wrap; nowrap would overflow the canvas on
+     narrower viewports. */
+  max-width: calc(100% - 32px);
+  text-align: center;
+  animation: hint-in 360ms ease both;
+}
+
+@keyframes hint-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .canvas {
+    min-height: 260px;
+    padding: 0.75rem;
+  }
+
+  .canvasHint {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.55rem;
+  }
+}

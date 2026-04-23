@@ -1,0 +1,147 @@
+.root {
+  background:
+    radial-gradient(ellipse at 0% 0%, var(--accent-muted) 0%, transparent 40%),
+    var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: var(--shadow-panel);
+  position: relative;
+  overflow: hidden;
+}
+
+.root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--accent) 0%,
+    var(--accent-soft) 100%
+  );
+  opacity: 0.6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lens {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lensLabel {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.lensName {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.statusBadge {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid;
+  border-radius: var(--radius-pill);
+  line-height: 1;
+  white-space: nowrap;
+  align-self: center;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+
+.tone-neutral {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.tone-ok {
+  color: var(--ok);
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+
+.tone-warn {
+  color: var(--warn);
+  border-color: var(--warn);
+  background: var(--warn-soft);
+}
+
+.headline {
+  display: flex;
+  align-items: baseline;
+  gap: 1.75rem;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  flex-wrap: wrap;
+}
+
+.headlineValue {
+  font-size: clamp(2.2rem, 4vw, 2.75rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.secondaryLabel {
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+.secondaryValue {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.interpretation {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.93rem;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+.caution {
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

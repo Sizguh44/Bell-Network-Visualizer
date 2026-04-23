@@ -1,0 +1,63 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  background: var(--surface-0);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.body {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.kind-key {
+  border-left-color: var(--accent);
+  background:
+    linear-gradient(90deg, var(--accent-muted) 0%, transparent 60%),
+    var(--surface-0);
+}
+.kind-key .label {
+  color: var(--accent);
+}
+
+.kind-confusion {
+  border-left-color: var(--warn);
+  background:
+    linear-gradient(90deg, var(--warn-soft) 0%, transparent 60%),
+    var(--surface-0);
+}
+.kind-confusion .label {
+  color: var(--warn);
+}
+
+.kind-in-demo {
+  border-left-color: var(--border-strong);
+  background: var(--surface-0);
+}
+.kind-in-demo .label {
+  color: var(--text-secondary);
+}
+
+.kind-in-theory {
+  border-left-color: var(--ok);
+  background:
+    linear-gradient(90deg, var(--ok-soft) 0%, transparent 60%),
+    var(--surface-0);
+}
+.kind-in-theory .label {
+  color: var(--ok);
+}
