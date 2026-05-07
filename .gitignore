@@ -12,3 +12,9 @@ coverage
 .idea
 .vscode/*
 !.vscode/extensions.json
+
+# Phase 9A — temp dir used by scripts/validate-quantum-engine.mjs
+# when it compiles the engine + selftest with the TypeScript compiler
+# API. Cleaned up at the end of every run; this entry covers the case
+# where a run is interrupted and the dir is left behind.
+.tmp-quantum-engine

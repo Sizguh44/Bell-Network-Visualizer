@@ -1,0 +1,170 @@
+/*
+ * GluingDiagnosticsPanel — Faz 3 panel, slimmed in Faz 5.5.
+ *
+ * Shared chrome (root, header, sectionLabel, diagnosticList,
+ * diagnosticRow, limitations, callout) lives in
+ * `../shared/LabShared.module.css` and is consumed via the four
+ * primitive components (`LabSection`, `LabDiagnosticRow`,
+ * `LabLimitationsList`, `LabCallout`) plus a direct import of
+ * `sharedStyles` for the panel root and header.
+ *
+ * What remains here:
+ *   • the twisted → vector → Regge tier grid (no other Lab panel uses
+ *     a 3-tier hierarchy grid layout);
+ *   • the per-pair value table (no other Lab panel uses tabular
+ *     display);
+ *   • the pair-table heading chrome (`.pairTable`, `.pairTableHeader`,
+ *     `.pairTableHeading`) — preserved verbatim so the pre-refactor
+ *     left-clustered label + badge layout stays identical and no
+ *     visual drift is introduced for users who already had the
+ *     Gluing panel open.
+ */
+
+/* --- Hierarchy: twisted → vector → Regge ----------------- */
+
+.hierarchyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.55rem;
+}
+
+.hierarchyItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.tierName {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+.tierDef {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.tierApp {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+}
+
+/* --- Pair table --------------------------------------- */
+
+/*
+ * `.pairTable` chrome and the inline `.pairTableHeader` /
+ * `.pairTableHeading` cluster are preserved verbatim from the Faz 3
+ * panel. The label + ProxyBadge sit clustered on the left of the row
+ * (rather than pushed apart with `space-between` like the shared
+ * `.sectionHeader` does), which matches the pre-Faz-5.5 visual exactly.
+ */
+
+.pairTable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pairTableHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.pairTableHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pairTableCaption {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* The table is wrapped so it can scroll horizontally on very narrow
+   widths without breaking the rest of the panel layout. */
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  background: var(--surface-1);
+}
+
+.table th,
+.table td {
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  background: var(--surface-0);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody td {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  letter-spacing: 0.01em;
+}
+
+/* The first column carries the per-pair colour swatch + label as a
+   single visual chip. Everything else is monospace numbers. */
+.pairCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pairSwatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+}
+
+.pairCellLabel {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--text-primary);
+}

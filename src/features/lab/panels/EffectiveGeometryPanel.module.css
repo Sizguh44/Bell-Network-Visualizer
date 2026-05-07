@@ -1,0 +1,84 @@
+/*
+ * EffectiveGeometryPanel — Faz 5 panel, slimmed in Faz 5.5.
+ *
+ * Shared chrome lives in `../shared/LabShared.module.css`; this file
+ * carries only the Effective-Geometry-specific surfaces:
+ *
+ *   • `.readingNote` — the topology-note follow-up line. Font-size is
+ *     slightly larger than Symmetry's `.readingNote` (0.82 vs 0.78
+ *     rem) because it carries a conceptual paragraph rather than a
+ *     group-theoretic label; this delta is preserved verbatim from
+ *     the pre-refactor panel.
+ *
+ *   • `.comparison*` classes — the vector / twisted / Regge card grid
+ *     (3-up auto-fit minmax 15rem). No other Lab panel uses this
+ *     layout, so it stays panel-specific.
+ */
+
+.readingNote {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+}
+
+/* --- Vector / twisted / Regge comparison grid ----------- */
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.55rem;
+}
+
+.comparisonCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.comparisonCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.comparisonCardName {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+}
+
+.comparisonCardBody {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.comparisonCardLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.2;
+}
+
+.comparisonCardText {
+  margin: 0 0 0.15rem;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}

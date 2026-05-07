@@ -1,0 +1,33 @@
+/*
+ * SymmetryDiagnosticsPanel — Faz 4 panel.
+ *
+ * Slimmed in Faz 5.5 (extracted shared chrome to LabShared.module.css)
+ * and again in Faz 6.5 (the curated state-family classification list
+ * pattern moved to LabShared.module.css and is consumed via
+ * `LabFamilyReadingList`). What remains panel-specific:
+ *
+ *   • `.readingNote` — the canonical `topology.symmetryNote` line at
+ *     the bottom of the active topology card. Font-size is slightly
+ *     smaller than Effective Geometry's `.readingNote` (0.78 vs 0.82
+ *     rem) because it carries a group-theoretic label rather than a
+ *     conceptual paragraph; this delta is preserved verbatim from
+ *     the pre-refactor panel.
+ *
+ * The panel's family-list `<ul>` and the eight CSS classes that
+ * supported it (`.familyList`, `.familyItem`, `.familyItemActive`,
+ * `.familyItemTitleRow`, `.familyItemLabel`, `.familyActiveChip`,
+ * `.familyHeadline`, `.familyBody`) are now in
+ * `LabShared.module.css`. The visual tightens slightly: the active
+ * chip flows inline next to the family label rather than sitting on
+ * its own row, and the row padding/gap matches the (more compact)
+ * Correlation pattern. No content changed.
+ */
+
+.readingNote {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+}

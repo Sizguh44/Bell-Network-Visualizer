@@ -10,6 +10,7 @@ import { ObservableNotesCard } from '../features/theory/ObservableNotesCard';
 import { LessonPanel } from '../features/learning/LessonPanel';
 import { ChallengePanel } from '../features/challenge/ChallengePanel';
 import { BridgePanel } from '../features/bridge/BridgePanel';
+import { LabPanel } from '../features/lab/LabPanel';
 import { ConceptAtlasPanel } from '../features/learning/ConceptAtlasPanel';
 import { ContentLibraryPanel } from '../features/content/ContentLibraryPanel';
 import { StartHereCard } from '../features/learning/StartHereCard';
@@ -50,6 +51,8 @@ import type {
 } from '../types/challenge';
 import type { BridgeLesson, BridgeLessonId } from '../types/bridge';
 import type { LibraryTab } from '../types/content';
+import type { LabPanelId } from '../types/lab';
+import { FIRST_LAB_PANEL_ID, LAB_PANEL_IDS } from '../types/lab';
 import {
   loadPersistedState,
   savePersistedState,
@@ -83,6 +86,7 @@ interface ResolvedInitialState {
   activeChallengeId: ChallengeId;
   challengeStates: ChallengeStates;
   activeBridgeLessonId: BridgeLessonId;
+  activeLabPanelId: LabPanelId;
   selectedEdgeId: string | null;
   atlasEntryId: GlossaryEntryId | null;
   libraryTab: LibraryTab;
@@ -162,6 +166,18 @@ function resolveInitialState(): ResolvedInitialState {
       ? bridgeCandidate
       : FIRST_BRIDGE_LESSON_ID;
 
+  // Lab panel resolution. URL `labPanel` only ships when `mode === 'lab'`,
+  // but the value itself is mode-independent — we accept a stored choice
+  // even if the user is currently on a different mode, so reopening the
+  // Lab returns them to the panel they last viewed. Unknown values
+  // (including a v1-era snapshot with no field at all) fall back to the
+  // first-of-kind constant.
+  const labPanelCandidate = urlState.labPanel ?? stored.activeLabPanelId;
+  const activeLabPanelId: LabPanelId =
+    labPanelCandidate && LAB_PANEL_IDS.includes(labPanelCandidate)
+      ? labPanelCandidate
+      : FIRST_LAB_PANEL_ID;
+
   const lessonStates: LessonStates = isLessonStates(stored.lessonStates)
     ? { ...initialLessonStates(), ...stored.lessonStates }
     : initialLessonStates();
@@ -195,6 +211,7 @@ function resolveInitialState(): ResolvedInitialState {
     activeChallengeId,
     challengeStates,
     activeBridgeLessonId,
+    activeLabPanelId,
     selectedEdgeId,
     atlasEntryId,
     libraryTab,
@@ -235,6 +252,10 @@ export default function App() {
 
   const [activeBridgeLessonId, setActiveBridgeLessonId] =
     useState<BridgeLessonId>(initial.activeBridgeLessonId);
+
+  const [activeLabPanelId, setActiveLabPanelId] = useState<LabPanelId>(
+    initial.activeLabPanelId,
+  );
 
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(
     initial.selectedEdgeId,
@@ -278,6 +299,7 @@ export default function App() {
       activeChallengeId,
       challengeStates,
       activeBridgeLessonId,
+      activeLabPanelId,
       selectedEdgeId,
       atlasEntryId,
       libraryTab,
@@ -296,6 +318,7 @@ export default function App() {
       lesson: activeLessonId,
       challenge: activeChallengeId,
       bridge: activeBridgeLessonId,
+      labPanel: activeLabPanelId,
     });
     writeUrlHash(hash);
   }, [
@@ -307,6 +330,7 @@ export default function App() {
     activeChallengeId,
     challengeStates,
     activeBridgeLessonId,
+    activeLabPanelId,
     selectedEdgeId,
     atlasEntryId,
     libraryTab,
@@ -430,6 +454,7 @@ export default function App() {
     setActiveLessonId(FIRST_LESSON_ID);
     setActiveChallengeId(FIRST_CHALLENGE_ID);
     setActiveBridgeLessonId(FIRST_BRIDGE_LESSON_ID);
+    setActiveLabPanelId(FIRST_LAB_PANEL_ID);
     setSelectedEdgeId(null);
     closeAllOverlays();
   }, [closeAllOverlays]);
@@ -500,6 +525,19 @@ export default function App() {
         activeBridgeLessonId={activeBridgeLessonId}
         onChangeBridgeLesson={setActiveBridgeLessonId}
         onApplySetup={handleApplyBridgeSetup}
+      />
+    );
+  } else if (appMode === 'lab') {
+    // Geometry Lab. The shared sidebar / canvas continue to render around
+    // it; the Lab footer carries the panel switcher and active panel body.
+    // `config` is forwarded so panels that read the canonical pipeline
+    // (Faz 3: Gluing Diagnostics) stay in lockstep with the canvas —
+    // placeholders ignore it and stay nullary.
+    footer = (
+      <LabPanel
+        config={config}
+        activePanelId={activeLabPanelId}
+        onChangePanel={setActiveLabPanelId}
       />
     );
   } else {

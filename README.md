@@ -14,6 +14,35 @@ lessons, Socratic challenges and cosmology-bridge reflections.
 - 🔭 Read the same state through five toy observable lenses without moving the canvas.
 - 🧭 Follow eight lessons, ten challenges, seven bridges and a seventeen-entry Concept Atlas.
 
+> **Academic framing — Bell-Network Geometry Lab.** A research-oriented
+> pedagogical lab for **Bell-network states** and **effective geometry**
+> on small spin networks, focused on the **dipole graph** and the
+> **cycle-4 graph**. The Lab separates four epistemic registers: (i)
+> pedagogical proxy diagnostics on the canvas, (ii) exact finite-
+> dimensional quantum-information results in a minimal qubit model,
+> (iii) single-node **SU(2) invariant subspace / intertwiner projector**
+> structures for arbitrary spin tuples, and (iv) **projected spin-1/2
+> Bell-network states** for the dipole and cycle-4 graphs (link-singlet
+> product projected by the tensor product of per-node intertwiner
+> projectors).
+>
+> **The project is not presented as a complete LQG calculation; it is a
+> layered research sandbox that separates pedagogical diagnostics, exact
+> finite-dimensional quantum-information computations, single-node SU(2)
+> intertwiner structures, and restricted spin-1/2 projected Bell-network
+> states.** Every numerical output is labelled with its register
+> (visible `<ProxyBadge>` chips, model chips, machine-readable `honesty:
+> …` literals on engine outputs); the **proxy-vs-exact-observable
+> distinction** is enforced at the discipline level. **Future area,
+> volume, and dihedral-angle operators** — the next natural step toward
+> exact LQG-flavoured observables on these states — are documented as
+> roadmap items rather than implemented.
+>
+> See [*Academic Scope: Bell-Network Geometry Lab*](#academic-scope-bell-network-geometry-lab)
+> below for the four-tier breakdown, and the three companion docs in
+> [`docs/`](./docs) for the demo flow, honesty-class reference, and
+> future-research roadmap.
+
 **Live demo:** `https://<owner>.github.io/Bell-Network-Visualizer/` *(replace `<owner>` with
 the GitHub account or organisation that hosts this fork)*.
 
@@ -145,6 +174,176 @@ distance from any full-theory claim.
 - ❌ **Not** a general graph editor. Two topologies ship (Dipole and Cycle-4); both are
   hard-coded.
 - ❌ **Not** a cosmological model. The Bridge module frames the distance from there.
+
+## Academic Direction
+
+The project is being repositioned as the **Bell-Network Geometry Lab** — a
+focused, browser-only environment for studying small spin networks at the
+intersection of quantum information and quantum geometry. The concepts the
+Lab is being shaped around (in upcoming phases — none of these are full
+calculations yet, and most already appear individually across the Concept
+Atlas, lessons, challenges and bridges):
+
+- **Bell-network states** as a one-parameter family of correlated states on
+  a fixed graph.
+- **Entanglement-induced gluing** between adjacent intertwiners across
+  shared faces.
+- **Quantum polyhedra** and **twisted geometry** as the local pictures
+  associated with each node.
+- **Vector geometry** vs. **Regge geometry** — two distinct semiclassical
+  limits of the same combinatorial data.
+- **Automorphism-invariant homogeneous graphs** (dipole, cycle-4) as the
+  simplest stage where graph symmetry is non-trivial but tractable.
+- **One-node observables** and **local entanglement entropy** — the
+  observables the visualiser is currently approximating.
+- **Effective geometry on dipole graphs** and the **spherical-tetrahedron**
+  reading at small graphs, mapped to LQG-cosmology toy contexts.
+- **Correlations in quantum geometry and cosmology** — how symmetric,
+  homogeneous correlations on a graph stand in for cosmological
+  homogeneity in toy models.
+
+The Geometry Lab phase reframes these as named research targets — each
+labelled with an honesty class (see below) — and exposes them as a
+dedicated Lab surface alongside the existing Explore / Learn / Challenge /
+Bridge modes. **No Lab code ships in this commit;** this is the
+documentation step that fixes the academic register first.
+
+## Honesty / Scope
+
+This project is **not** a full LQG computation engine. The current numbers
+on screen are *pedagogical proxies* — deterministic toy formulas designed
+to respond in the right qualitative direction, not to compute real
+intertwiner-space correlators. The *Bridge* module already frames the
+distance from a real cosmological claim, and that register is preserved
+everywhere else.
+
+The Geometry Lab phase formalises this: every Lab diagnostic must be
+explicitly labelled as one of four honesty kinds, so the user (and the
+author) always know what register they are reading.
+
+| label | meaning |
+| --- | --- |
+| **Pedagogical proxy** | A toy formula that responds in the right direction but does not compute a real LQG quantity. (All current scores fall here.) |
+| **Conceptual diagnostic** | A qualitative read on a structural property — symmetry, homogeneity, alignment pattern — not a number to take seriously, but a yes / no / weak / strong indicator. |
+| **Curated classification** | A discrete tag chosen from a fixed, author-maintained set (e.g. Bell-like / frustrated / edge-biased family typing). The classification is honest because the set is enumerable, not because the math is exhaustive. |
+| **Future calculable observable** | A quantity that *could* be computed honestly from a Bell-network state but is currently only sketched — flagged so the gap is visible rather than hidden. |
+
+No diagnostic in any future Lab panel will be added without one of these
+labels. This rule is enforced as a CLAUDE.md constraint (see *Constraints
+that have been deliberately preserved*), not a runtime check — the cost of
+violating it is that a panel ships unlabelled, which is exactly what this
+discipline forbids.
+
+## Academic Scope: Bell-Network Geometry Lab
+
+The project now ships **four distinct epistemic registers** stacked on top
+of each other. Each register has a fixed claim envelope; every UI surface
+is labelled with which register it belongs to (visible
+`<ProxyBadge>` chips, model chips, and machine-readable `honesty: …`
+literals on engine outputs). Move up the ladder and the engine produces
+more LQG-flavoured numbers; the boundary between exact, proxy, and
+future-LQG stays sharp at every step.
+
+### Tier 1 — Pedagogical proxy layer
+**What it is.** The canvas / graph diagnostics, the four-knob state
+machine, the per-pair toy values (`localStrength`,
+`localAlignmentScore`, `localGluingProxy`), the global aggregates
+(`antiParallelScore`, `gluingScore`, `mutualInformationProxy`).
+
+**Status.** Pedagogical proxies — deterministic toy formulas that respond
+in the right qualitative direction. They are *not* LQG observables.
+
+**Where to find it.** Explore mode canvas, Geometry Lab → Gluing
+Diagnostics' pedagogical-proxy rows, Geometry Lab → Correlation
+Summary's pair profile and global summary cards.
+
+### Tier 2 — Minimal qubit quantum-information layer
+**What it is.** Density matrices `ρ = |ψ⟩⟨ψ|`, partial traces over
+arbitrary qubit subsets, von Neumann entropy via Jacobi
+eigendecomposition, exact pairwise mutual information
+`I(A : B) = S(A) + S(B) − S(A ∪ B)`. Surfaced as the **Minimal Qubit
+Engine Preview** in the Correlation Summary panel, with a per-qubit
+entropy heatmap and an exact pairwise MI heatmap.
+
+**Status.** Exact within the minimal qubit model — finite-dimensional
+quantum-information results computed in closed form on a small Hilbert
+space. The mapping from app config to qubit state is curated, not
+LQG-derived. The model chip `[minimal qubit model]` and the machine-
+readable `honesty: 'minimal-qubit-model'` literal travel with the
+state.
+
+**Where to find it.** Geometry Lab → Correlation Summary → Minimal
+Qubit Engine Preview. The dipole preview gives a Bell pair (`I = 2`
+bits); the cycle-4 preview gives a 4-qubit GHZ (`I = 1` bit on every
+pair).
+
+### Tier 3 — Single-node SU(2) representation / intertwiner layer
+**What it is.** Spin-`j` matrices (Jx, Jy, Jz, Casimir) for arbitrary
+half-integer spins; tensor-product spin spaces; total angular momentum
+operators; eigendecomposition of `J_total²`; SU(2)-invariant subspace
+projector `P_inv = V V†` for any spin tuple at a single node.
+
+**Status.** Exact SU(2) representation-theory results. The single-node
+`mult(j_total = 0)` numbers match the textbook Wigner decomposition
+exactly (verified by selftest for `[½, ½]`, `[½, ½, ½, ½]`, `[1, 1]`,
+`[1, ½, ½]`). A single-node intertwiner space is *not* a Bell-network
+state on its own.
+
+**Where to find it.** Geometry Lab → Correlation Summary → Single-node
+SU(2) Intertwiner Sandbox. Header chip `[single-node SU(2) model]`.
+
+### Tier 4 — Spin-1/2 projected Bell-network prototype layer
+**What it is.** A `BellNetworkGraph` contract (nodes + spin-labelled
+edges, with edge-slot bookkeeping) and a graph-level state builder
+
+> |Ψ_Γ⟩ = ( ⊗_nodes P_inv(node) ) · ( ⊗_edges |S⟩_edge ) / norm
+
+— the link-singlet product projected by the tensor product of per-node
+SU(2)-invariant subspace projectors, then L2-normalised. Ships for the
+two-node single-edge graph (minimal prototype), the dipole graph
+(endpoint dim 256 / graph invariant dim 4), and the cycle-4 graph
+(endpoint dim 256 / graph invariant dim 1).
+
+**Status.** Exact within the projected construction. **Not** a
+geometry observable, **not** a cosmological state — the state lives on
+a fixed combinatorial graph and waits for area / volume / dihedral
+operators to be applied. The model chip
+`[graph contract · projected spin-1/2 states]` and the machine-readable
+`honesty: 'spin-half-projected-bell-network-state'` literal travel
+with the state.
+
+**Where to find it.** Geometry Lab → Correlation Summary → Bell-network
+Graph Sandbox. All three canonical graphs visible as cards with state
+register / kind / endpoint dim / graph invariant dim / per-node
+invariant dims / honesty marker.
+
+### What is exact, what is proxy, what is future LQG
+
+| layer | exact within… | not exact LQG because… |
+| --- | --- | --- |
+| **Tier 1** (pedagogical proxy) | nothing — they are toy formulas | every score is a curated function of the four knobs |
+| **Tier 2** (minimal qubit) | finite-dimensional quantum-information arithmetic on a curated qubit state | the topology+family → qubit-state mapping is hand-picked, not derived from LQG |
+| **Tier 3** (single-node SU(2)) | SU(2) representation theory at one node | single-node intertwiner space is not a graph-level state |
+| **Tier 4** (projected Bell-network) | the projected construction `P_global · ⊗|S⟩ / norm` | no geometry operator is applied to it; spin-1/2 only |
+| **future LQG** | textbook LQG kinematic Hilbert space | not implemented yet — see roadmap |
+
+### Companion documentation
+
+Three docs in [`docs/`](./docs) accompany this README:
+
+- **[`docs/academic-demo-flow.md`](./docs/academic-demo-flow.md)** —
+  a 5–7 minute Geometry Lab walkthrough mapped to these four tiers,
+  with discussion questions at the end.
+- **[`docs/honesty-classes.md`](./docs/honesty-classes.md)** — the
+  canonical reference for which register is allowed to claim what,
+  including the four `<ProxyBadge>` kinds, the three engine honesty
+  literals, the three UI model chips, and an explicit "what you cannot
+  say" boundary list.
+- **[`docs/future-research-roadmap.md`](./docs/future-research-roadmap.md)**
+  — three-horizon plan: near-term (area / volume / dihedral / reduced
+  ρ on the projected state), mid-term (arbitrary-spin Wigner-3j /
+  twisted-vs-Regge), long-term (spin-foam vertex amplitude /
+  cosmological sector mapping / refinement / coherent intertwiners).
 
 ## Quick Start
 

@@ -1,5 +1,9 @@
 .root {
+  /* Five mode buttons including "Geometry Lab" — slightly wider than the
+     original four. Allow wrapping so very narrow viewports break to a
+     second row gracefully instead of overflowing the header. */
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 2px;
   padding: 3px;
   background: var(--surface-0);
@@ -38,4 +42,14 @@
   background: var(--accent-soft);
   color: var(--accent);
   box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* Below ~520 px (very narrow phones) shrink padding so all five labels —
+   including "Geometry Lab" — stay readable on a single line as long as
+   possible. Wrapping is still available as the final fallback. */
+@media (max-width: 520px) {
+  .button {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.74rem;
+  }
 }

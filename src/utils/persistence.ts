@@ -4,12 +4,21 @@ import type { ChallengeId, ChallengeStates } from '../types/challenge';
 import type { BridgeLessonId } from '../types/bridge';
 import type { GlossaryEntryId } from '../types/glossary';
 import type { LibraryTab } from '../types/content';
+import type { LabPanelId } from '../types/lab';
 import type { Locale } from '../i18n/types';
 
 /**
  * Versioned storage key. Bump the version suffix whenever the persisted shape
  * changes in a way that older data cannot be loaded back. Old keys are left
  * behind intentionally — they can be reclaimed by a migration step later.
+ *
+ * **Faz 2 note** — adding `'lab'` to `AppMode` and the optional
+ * `activeLabPanelId` field is *strictly additive* and backward-compatible:
+ *   • old snapshots stored an `appMode` of `'explore' | 'learn' |
+ *     'challenge' | 'bridge'`, all of which remain valid in the new union;
+ *   • old snapshots have no `activeLabPanelId` field — the resolver falls
+ *     back to the first-of-kind constant when reading.
+ * No version bump is needed; the v1 key continues to round-trip cleanly.
  */
 export const STORAGE_KEY = 'bell-network-visualizer:v1';
 
@@ -26,6 +35,12 @@ export interface PersistedState {
   activeChallengeId: ChallengeId;
   challengeStates: ChallengeStates;
   activeBridgeLessonId: BridgeLessonId;
+  /**
+   * Geometry Lab panel last viewed. Optional so v1-era snapshots predating
+   * the Lab continue to load cleanly — the resolver falls back to
+   * `FIRST_LAB_PANEL_ID` when this field is missing.
+   */
+  activeLabPanelId?: LabPanelId;
   selectedEdgeId: string | null;
   atlasEntryId: GlossaryEntryId | null;
   libraryTab: LibraryTab;

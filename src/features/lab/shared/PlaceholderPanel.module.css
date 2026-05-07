@@ -1,0 +1,100 @@
+/*
+ * PlaceholderPanel — shared layout for every Faz 2 Lab panel.
+ *
+ * Every Lab panel currently looks the same: a header with the panel label
+ * + short goal + a sample ProxyBadge of the panel's intended honesty class,
+ * a body paragraph describing what later phases will deliver, and a
+ * footer-tag making the placeholder status explicit.
+ *
+ * Faz 3+ may peel each panel off into its own module CSS as real
+ * diagnostics arrive; for now consolidating here keeps the skeleton lean.
+ */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem 1.4rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.shortGoal {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  max-width: 64ch;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.placeholder {
+  margin: 0;
+  color: var(--text-tertiary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  border-left: 2px dashed var(--border-medium);
+  padding-left: 0.85rem;
+}
+
+.footerRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footerLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.placeholderTag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.55rem;
+  border-radius: var(--radius-pill);
+  border: 1px dashed var(--border-medium);
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.proxyHint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}

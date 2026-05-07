@@ -1,0 +1,80 @@
+/*
+ * ProxyBadge — visible honesty-class tag for every Geometry Lab diagnostic.
+ *
+ * The CLAUDE.md *Proxy honesty (Geometry Lab discipline)* constraint
+ * mandates that this badge sits on the panel surface, not in a tooltip:
+ * the user (and the author) must always be able to read the diagnostic's
+ * honesty class without hover, drill-in, or extra interaction.
+ *
+ * Each kind reuses an existing semantic token from `global.css` so the
+ * badge palette drifts together with the rest of the chrome:
+ *   pedagogical-proxy           → accent (the "this is the demo register")
+ *   conceptual-diagnostic       → ok (qualitative, dependable read)
+ *   curated-classification      → warn (caveat — author opinion, not math)
+ *   future-calculable-observable→ text-tertiary (neutral / not yet there)
+ */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  line-height: 1;
+  white-space: nowrap;
+  /* No hover transition — the badge is informational, not interactive. */
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  flex: 0 0 auto;
+}
+
+/* Per-kind colour overrides. Kept on a single layer so adding a future
+   kind only means appending one rule below. */
+
+.pedagogicalProxy {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.pedagogicalProxy .dot {
+  background: var(--accent);
+}
+
+.conceptualDiagnostic {
+  color: var(--ok);
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+.conceptualDiagnostic .dot {
+  background: var(--ok);
+}
+
+.curatedClassification {
+  color: var(--warn);
+  border-color: var(--warn);
+  background: var(--warn-soft);
+}
+.curatedClassification .dot {
+  background: var(--warn);
+}
+
+.futureCalculableObservable {
+  color: var(--text-tertiary);
+  border-color: var(--border-medium);
+  background: var(--surface-2);
+}
+.futureCalculableObservable .dot {
+  background: var(--text-tertiary);
+}

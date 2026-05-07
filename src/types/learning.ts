@@ -2,7 +2,13 @@ import type { ContentMeta } from './content';
 import type { DemoConfig } from './graph';
 import type { GlossaryEntryId } from './glossary';
 
-export type AppMode = 'explore' | 'learn' | 'challenge' | 'bridge';
+/**
+ * Five peer modes. `'lab'` is the **Geometry Lab skeleton** introduced in
+ * Faz 2 (2026-04-25) — it currently renders only placeholder panels and a
+ * scope note pointing forward to later phases. The other four modes are
+ * unchanged in semantics.
+ */
+export type AppMode = 'explore' | 'learn' | 'challenge' | 'bridge' | 'lab';
 
 export type LessonId =
   | 'intro-dipole'

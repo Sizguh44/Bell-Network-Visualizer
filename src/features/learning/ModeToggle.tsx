@@ -8,9 +8,14 @@ interface ModeToggleProps {
 }
 
 /**
- * The four peer-mode buttons in the header. Copy comes from `UI_STRINGS`
+ * The five peer-mode buttons in the header. Copy comes from `UI_STRINGS`
  * (both the visible label and the hover `title` / `aria-description`),
  * so the control swaps language in lockstep with the rest of the app.
+ *
+ * Geometry Lab is the fifth mode (Faz 2). It sits at the end of the row
+ * — Explore / Learn / Challenge / Bridge come first because they are
+ * what most users will reach for; the Lab is research-oriented surface
+ * and currently still a skeleton.
  */
 export function ModeToggle({ mode, onChange }: ModeToggleProps) {
   const t = useUiText();
@@ -34,6 +39,11 @@ export function ModeToggle({ mode, onChange }: ModeToggleProps) {
       id: 'bridge',
       label: t.modes.bridge.label,
       hint: t.modes.bridge.hint,
+    },
+    {
+      id: 'lab',
+      label: t.modes.lab.label,
+      hint: t.modes.lab.hint,
     },
   ];
 

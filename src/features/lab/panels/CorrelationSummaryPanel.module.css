@@ -1,0 +1,1223 @@
+/*
+ * CorrelationSummaryPanel — Faz 6 panel.
+ *
+ * Slimmed in Faz 6.5 (the curated state-family correlation list pattern
+ * moved to `LabShared.module.css` and is consumed via
+ * `LabFamilyReadingList`). What remains panel-specific:
+ *
+ *   • `.profileCaption` — small caption rendered below a section
+ *     header inside the body slot.
+ *   • `.pairGrid` + `.pairCard*` — auto-fit 4-column grid of per-pair
+ *     toy-correlation cards. Each card surfaces three pedagogical
+ *     proxies (`localStrength`, `localAlignmentScore`,
+ *     `localGluingProxy`) read verbatim from `deriveEdgeDetails`.
+ *     Mismatch is intentionally omitted because alignment already
+ *     encodes it (alignment ≈ cos²(mismatch)) — the goal of the
+ *     correlation profile is a focused per-pair correlation read,
+ *     not a full per-pair dump (the Faz 3 Gluing panel's pair table
+ *     keeps that role).
+ *   • `.globalGrid` + `.globalCard*` — auto-fit row of three global
+ *     proxy stat cards (anti-parallel, gluing, mutual-information
+ *     proxy). Numbers come verbatim from `deriveCorrelationState`.
+ *
+ * The panel's family-reading `<ul>` and the seven CSS classes that
+ * supported it (`.familyReadingList`, `.familyReadingItem`,
+ * `.familyReadingItemActive`, `.familyReadingName`,
+ * `.familyReadingActiveChip`, `.familyReadingHeadline`,
+ * `.familyReadingBody`) are now in `LabShared.module.css`. No content
+ * changed; the visual matches the Faz 6 pattern verbatim because
+ * Correlation's pattern is the one that became canonical in shared.
+ */
+
+.profileCaption {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* --- Pair-level profile (4 cards) ----------------------- */
+
+.pairGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.55rem;
+}
+
+.pairCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.pairCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pairCardSwatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+}
+
+.pairCardLabel {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.005em;
+}
+
+/* `<dl>` semantics: the metric label is the term, the value is the
+   definition. Two-column grid keeps labels left, monospace values
+   right-aligned within their column. */
+.pairCardMetrics {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 0.75rem;
+}
+
+.pairCardMetricLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  align-self: center;
+}
+
+.pairCardMetricValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  line-height: 1.4;
+  text-align: right;
+  align-self: center;
+}
+
+/* --- Global proxy summary (3 stat cards) ---------------- */
+
+.globalGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.55rem;
+}
+
+.globalCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.globalCardLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.2;
+}
+
+.globalCardValue {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+/* --- Faz 9B Minimal Qubit Engine Preview ---------------- */
+
+/*
+ * The Engine Preview section sits between the Global Summary and the
+ * State-Family Reading inside Correlation Summary. It surfaces *exact*
+ * finite-dimensional quantum-information calculations on a minimal
+ * qubit model and pins the model boundary visually:
+ *
+ *   • a `[minimal qubit model]` chip in the section header
+ *     (rendered via `LabSection.headerRight`);
+ *   • a single intro paragraph stating the model boundary;
+ *   • a mapping card (topology / family / selected state / qubits /
+ *     reason);
+ *   • a per-qubit entropy grid (1 card per qubit; bits + nats);
+ *   • a 2×2 reduced density matrix grid for qubit 0;
+ *   • an accent-tinted exact-vs-proxy callout pinning the distinction
+ *     between "exact within model" and "pedagogical proxy of LQG
+ *     register".
+ *
+ * No `<ProxyBadge>` is used here — the engine outputs are *exact*
+ * within their model rather than proxies, so the four ProxyKind
+ * categories don't fit. A neutral chip stands in.
+ */
+
+.modelChip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.engineIntro {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+/* Mapping card: 2-column dl + reason paragraph below. */
+
+.engineMappingCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.engineMappingGrid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) 1fr;
+  gap: 0.3rem 0.85rem;
+  align-items: baseline;
+}
+
+.engineMappingLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+.engineMappingValue {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.engineMappingReason {
+  margin: 0;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.engineMappingReasonLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-right: 0.5rem;
+}
+
+/* Per-qubit entropy grid */
+
+.entropySectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.entropySectionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.entropyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.55rem;
+}
+
+.entropyCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.entropyCardLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.entropyCardPrimary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.entropyCardValue {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.entropyCardUnit {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+}
+
+.entropyCardSecondary {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+/* Reduced density matrix grid (2×2 only in Phase 9B). */
+
+.matrixSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.matrixHead {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.matrixGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  max-width: 22rem;
+}
+
+.matrixCell {
+  padding: 0.55rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  text-align: center;
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  letter-spacing: 0.02em;
+}
+
+.matrixCell:nth-child(2n) {
+  border-right: none;
+}
+
+.matrixCell:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+/* Exact-vs-proxy callout: accent-tinted aside, mirrors the existing
+   `LabCallout` visual language but tighter (panel-specific). */
+
+.exactVsProxyCallout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.exactVsProxyLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.exactVsProxyBody {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+/* --- Faz 9B.5 mutual-information comparison ------------- */
+
+/*
+ * Sits inside the Engine Preview section, after the reduced density
+ * matrix grid and before the existing exact-vs-proxy callout.
+ *
+ * Two render branches:
+ *   • computed (numQubits === 2) — a 2-card grid (`mutualInfoGrid`)
+ *     showing the exact MI value and the existing proxy MI value
+ *     side by side, plus a top body explaining the formula and a
+ *     qualitative-comparison disclaimer at the bottom.
+ *   • unsupported (numQubits >= 3) — a dashed `unsupportedNotice`
+ *     block stating the deferral, with the proxy value still
+ *     surfaced inline so the user has *something* to look at.
+ *
+ * The qualitative-comparison disclaimer is the visible Phase 9B.5
+ * honesty pin: proxy is unitless, exact MI is in bits/nats, the
+ * comparison is qualitative — not a numeric error bar.
+ */
+
+.mutualInfoComparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.mutualInfoComputedBody {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.mutualInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.55rem;
+}
+
+.mutualInfoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.mutualInfoBreakdown {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.35rem;
+  margin-top: 0.1rem;
+}
+
+.unsupportedNotice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-sm);
+}
+
+.unsupportedLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.unsupportedBody {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.unsupportedProxyLine {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.4rem;
+}
+
+.unsupportedProxyLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-right: 0.45rem;
+}
+
+.qualitativeComparison {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  line-height: 1.55;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.qualitativeComparisonLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-right: 0.45rem;
+}
+
+/* --- Faz 9C-2 heatmaps --------------------------------- */
+
+/*
+ * Two visualisations sit inside the Engine Preview section:
+ *
+ *   • Node entropy heatmap — a horizontal fill bar appended to each
+ *     existing per-qubit entropy card (the entropy cards keep their
+ *     numeric label / value / secondary; the bar is a visual addendum,
+ *     not a replacement). Width = entropyBits / 1 (one bit is the
+ *     maximum single-qubit entropy). The bar is purely a visual
+ *     normalisation — not a new physics score.
+ *
+ *   • Pairwise MI heatmap — an n × n grid of I(Qᵢ : Qⱼ) values. The
+ *     grid is wrapped in an `overflow-x: auto` container so narrow
+ *     screens can scroll horizontally; on the engine's max numQubits
+ *     (currently 4) the grid fits comfortably above 360 px wide.
+ *     Diagonal cells render an em-dash; off-diagonal cells carry a
+ *     CSS custom property `--intensity` in [0, 1] that drives the
+ *     accent-tinted background (computed at render time from
+ *     `bits / maxComputedBits`); unsupported cells render as "n/a".
+ *
+ * Honesty: the body strings under `lab.correlations.enginePreview.heatmaps`
+ * pin that both heatmaps surface values exact within the minimal qubit
+ * model — NOT LQG mutual information.
+ */
+
+.entropyHeatmapBody {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.entropyBarRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.entropyBarTrack {
+  position: relative;
+  height: 0.45rem;
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.entropyBarFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: calc(100% * var(--intensity, 0));
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+  transition: width var(--t-med) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entropyBarFill {
+    transition: none;
+  }
+}
+
+/* Pairwise MI heatmap. */
+
+.miHeatmap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.miHeatmapBody {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Outer scroll container — narrow-width safety. The grid is set in
+   `inline-grid` so it doesn't stretch to fill the wider scrollable
+   region; the parent's `auto` overflow handles narrow screens. */
+.miHeatmapScroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* The grid uses `1fr` columns sized to `minmax(3rem, 1fr)` so the
+   inner cells stay roughly square at typical widths. The first column
+   is reserved for row labels (Q0, Q1, …) so it gets `auto` width. */
+.miHeatmapGrid {
+  display: inline-grid;
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  min-width: max-content;
+}
+
+.miHeatmapHeader,
+.miHeatmapRowLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 0.45rem 0.55rem;
+  background: var(--surface-2);
+  text-align: center;
+  line-height: 1;
+}
+
+.miHeatmapCorner {
+  background: var(--surface-2);
+  padding: 0.45rem 0.55rem;
+}
+
+.miHeatmapCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.6rem;
+  padding: 0.55rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  background: var(--surface-1);
+  /*
+   * Background tint scales with `--intensity` (0..1). We blend the
+   * accent over `surface-1` using `color-mix`; intensity 0 yields
+   * surface-1 unchanged, intensity 1 yields ~accent-soft strength.
+   * The fallback uses accent-soft directly for browsers without
+   * `color-mix` (modern Safari/Chrome/Firefox all ship it).
+   */
+  background: color-mix(
+    in srgb,
+    var(--accent-soft) calc(var(--intensity, 0) * 100%),
+    var(--surface-1)
+  );
+}
+
+.miHeatmapDiagonal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.6rem;
+  padding: 0.55rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  background: var(--surface-2);
+  letter-spacing: 0.02em;
+}
+
+.miHeatmapUnsupported {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 3.6rem;
+  padding: 0.55rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  background: var(--surface-1);
+  border: 1px dashed var(--border-medium);
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+.miHeatmapValue {
+  /* Reserved for inline overrides; the cell already styles the value. */
+  font-variant-numeric: tabular-nums;
+}
+
+.heatmapCaption {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* --- Faz 9E-1 Intertwiner Sandbox --------------------------- */
+
+/*
+ * Single-node SU(2) Intertwiner Sandbox section. Sits as a sibling
+ * `LabSection` after the Engine Preview inside Correlation Summary.
+ * Surfaces the Phase 9D-2-b `invariantSubspaceProjector` engine output
+ * for a fixed list of small spin tuples.
+ *
+ * Honesty: header chip "single-node SU(2) model" + intro paragraph pin
+ * the model boundary. The chip is rendered via `LabSection.headerRight`,
+ * NOT a `<ProxyBadge>` — engine outputs in this section are exact within
+ * their model rather than proxies of an LQG observable, so the four
+ * ProxyKinds don't fit (same convention as the existing Engine Preview).
+ *
+ * Per-example cards live in an auto-fit grid; sanity chips render with
+ * `--ok` / `--warn` semantics (selftest at 60/60 means every chip should
+ * show pass under normal flows, but the runtime check exists as a
+ * tripwire and a visual confirmation of the property).
+ */
+
+.intertwinerSandbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.su2ModelChip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.intertwinerIntro {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.intertwinerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 0.6rem;
+}
+
+.intertwinerCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.intertwinerCardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.intertwinerCardTitle {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+
+.spinTuple {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* Stats: 2-column dl (label / value), three rows
+   (totalDimension / invariantDimension / expectedDimension). */
+.invariantStats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 0.75rem;
+}
+
+.invariantStatLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  align-self: center;
+}
+
+.invariantStatValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  text-align: right;
+  align-self: center;
+}
+
+.spectrumPreviewBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.spectrumPreviewLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.spectrumPreviewValue {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  word-break: break-all;
+  line-height: 1.45;
+}
+
+.keptIndicesValue {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+}
+
+/* Sanity chips: a small inline group with pass/fail variants. */
+.sanityBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.sanityLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.sanityChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sanityChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+}
+
+.sanityChipPass {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+  color: var(--text-primary);
+}
+
+.sanityChipFail {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+  color: var(--text-primary);
+}
+
+.sanityChipState {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6rem;
+  opacity: 0.85;
+}
+
+.intertwinerInterpretation {
+  margin: 0;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* --- Mega Faz 9E-3 Bell-network graph sandbox ----------------- */
+
+/*
+ * Bell-network graph sandbox section. Sits as a sibling LabSection
+ * after the Phase 9E-1 single-node intertwiner sandbox and before the
+ * State-family curated reading. Surfaces the Phase 9E-2 graph contract
+ * + per-node intertwiner summaries for the three canonical spin-1/2
+ * graphs.
+ *
+ * Honesty: header chip "graph contract · not full state" + intro
+ * paragraph pin the boundary. The chip is rendered via
+ * `LabSection.headerRight`, NOT a `<ProxyBadge>` — engine outputs in
+ * this section are exact within their model rather than proxies of an
+ * LQG observable, so the four ProxyKinds don't fit (same convention as
+ * the intertwiner sandbox above).
+ *
+ * Per-graph cards live in an auto-fit grid; the prototype-state pill
+ * uses `--ok` / `--warn` semantics (only the two-node card gets
+ * "available"; dipole and cycle-4 get "deferred"). Per-node summaries
+ * live inside each graph card as a nested list.
+ */
+
+.bellNetworkSandbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.bellGraphChip {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bellNetworkIntro {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.bellGraphGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 0.6rem;
+}
+
+.bellGraphCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.bellGraphHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bellGraphTitle {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+}
+
+.bellGraphInterpretation {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Graph facts: 2-column dl. */
+.graphFactsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.graphFactsLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.graphFacts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 0.75rem;
+}
+
+.graphFactLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  align-self: center;
+}
+
+.graphFactValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  text-align: right;
+  align-self: center;
+}
+
+/* Prototype-state box: status pill + optional details. */
+.prototypeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.prototypeBoxHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.prototypeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.prototypePill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.prototypePillAvailable {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+  color: var(--text-primary);
+}
+
+.prototypePillDeferred {
+  border-color: var(--warn);
+  background: var(--warn-soft);
+  color: var(--text-primary);
+}
+
+.prototypeDetails {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.2rem 0.75rem;
+}
+
+.prototypeDetailLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+  align-self: center;
+}
+
+.prototypeDetailValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+  text-align: right;
+  align-self: center;
+  word-break: break-all;
+}
+
+.prototypeDeferredReason {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Per-node summary list inside each graph card. */
+.nodeSummaryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 0.45rem;
+}
+
+.nodeSummaryLabel {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.nodeSummaryList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.nodeSummaryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.nodeSummaryHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nodeSummaryNodeId {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.nodeSummaryIncidentEdges {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+.nodeSummaryStats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.2rem 0.65rem;
+}
+
+.nodeSummaryStatLabel {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  line-height: 1.3;
+  align-self: center;
+}
+
+.nodeSummaryStatValue {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  text-align: right;
+  align-self: center;
+}

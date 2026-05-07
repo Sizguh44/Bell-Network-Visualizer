@@ -6,6 +6,7 @@ import type {
 import type { AppMode, LessonId } from '../types/learning';
 import type { ChallengeId } from '../types/challenge';
 import type { BridgeLessonId } from '../types/bridge';
+import { LAB_PANEL_IDS, type LabPanelId } from '../types/lab';
 import { LOCALES, type Locale } from '../i18n/types';
 
 /**
@@ -15,6 +16,10 @@ import { LOCALES, type Locale } from '../i18n/types';
  *
  * Schema example:
  *   #mode=learn&lesson=topology-upgrade&topology=cycle4&family=frustrated&strength=0.70&lens=uniformity&edge=c23
+ *
+ * The Geometry Lab adds an optional `labPanel` cue that is only encoded
+ * when `mode === 'lab'`. Hashes that pre-date the Lab simply omit it —
+ * old URLs continue to round-trip unchanged.
  */
 export interface UrlState {
   lang?: Locale;
@@ -27,9 +32,16 @@ export interface UrlState {
   lesson?: LessonId;
   challenge?: ChallengeId;
   bridge?: BridgeLessonId;
+  labPanel?: LabPanelId;
 }
 
-const APP_MODES: readonly AppMode[] = ['explore', 'learn', 'challenge', 'bridge'];
+const APP_MODES: readonly AppMode[] = [
+  'explore',
+  'learn',
+  'challenge',
+  'bridge',
+  'lab',
+];
 const TOPOLOGIES: readonly GraphTopologyId[] = ['dipole', 'cycle4'];
 const FAMILIES: readonly StateFamily[] = [
   'uncorrelated',
@@ -108,6 +120,12 @@ export function parseUrlHash(hash: string): UrlState {
   const bridge = params.get('bridge');
   if (bridge) out.bridge = bridge as BridgeLessonId;
 
+  // `labPanel` is validated against the closed `LAB_PANEL_IDS` set —
+  // unknown values are dropped silently rather than coerced, so a malformed
+  // share link still opens the Lab on its first panel.
+  const labPanel = pickMember(params.get('labPanel'), LAB_PANEL_IDS);
+  if (labPanel) out.labPanel = labPanel;
+
   return out;
 }
 
@@ -136,6 +154,9 @@ export function encodeUrlHash(state: UrlState): string {
     params.set('challenge', state.challenge);
   }
   if (state.mode === 'bridge' && state.bridge) params.set('bridge', state.bridge);
+  if (state.mode === 'lab' && state.labPanel) {
+    params.set('labPanel', state.labPanel);
+  }
 
   return params.toString();
 }

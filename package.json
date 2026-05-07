@@ -3,13 +3,14 @@
   "private": true,
   "version": "0.5.0",
   "type": "module",
-  "description": "A toy interactive interface for exploring graph-based quantum geometry intuitions.",
+  "description": "Pedagogical lab for entanglement, graph symmetry and effective quantum geometry on Bell-network states.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "validate:i18n": "node scripts/validate-i18n.mjs && node scripts/validate-ui-i18n.mjs"
+    "validate:i18n": "node scripts/validate-i18n.mjs && node scripts/validate-ui-i18n.mjs",
+    "validate:quantum-engine": "node scripts/validate-quantum-engine.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

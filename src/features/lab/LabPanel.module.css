@@ -1,0 +1,178 @@
+/*
+ * LabPanel — root chrome for the Geometry Lab mode (Faz 2 skeleton).
+ *
+ * Lays out: header (eyebrow / title / subheading) → scope-note card →
+ * panel switcher → active panel body. Mirrors the Lesson / Challenge /
+ * Bridge panel proportions so the surface feels familiar even though the
+ * content is intentionally placeholder.
+ */
+
+.root {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.6rem 1.8rem;
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --- Header ------------------------------------------------ */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+/* --- Scope note card ------------------------------------- */
+
+.scopeNote {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.scopeNoteLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warn);
+  line-height: 1;
+}
+
+.scopeNoteBody {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* --- Demo-off notice (Faz 6.5) --------------------------- */
+
+/*
+ * Surfaces only when `config.demoMode === false` so the user
+ * understands why every pedagogical-proxy value across the four real
+ * Lab panels reads zero — the canvas pipeline is fed `strength = 0`
+ * in that case, exactly as `VisualizationPanel` does. The notice is
+ * **context only** — not a diagnostic, no `ProxyBadge`, no academic
+ * claim. Visually mirrors the `.scopeNote` (warn-soft tinted aside)
+ * so the two contextual notices read as a coherent pair when both
+ * are visible.
+ */
+
+.demoOffNotice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.demoOffNoticeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--warn);
+  line-height: 1;
+}
+
+.demoOffNoticeBody {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* --- Panel switcher (segmented tab strip) ---------------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.4rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.tab {
+  flex: 1 1 auto;
+  min-width: 8rem;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    color var(--t-fast),
+    border-color var(--t-fast),
+    background var(--t-fast);
+  line-height: 1.15;
+  text-align: center;
+}
+
+.tab:hover:not(.tabActive) {
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
+.tabActive {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+/* --- Body -------------------------------------------------- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}

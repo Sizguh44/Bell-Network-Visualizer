@@ -1,5 +1,106 @@
 # Release Notes
 
+## Academic discussion readiness — Bell-network effective geometry framing (2026-04-25)
+
+A short polish pass over the documentation set, sharpening how the
+project presents itself to a working LQG / Bell-network /
+effective-geometry researcher (the immediate audience is Bekir Hoca's
+research line). **No engine, UI, or numerical-output changes** —
+engine selftests stay at 84/84, all UI bytes byte-identical to the
+preceding milestone.
+
+What changed:
+
+- **README.md** and **README.tr.md** — the *Academic framing*
+  callout is rewritten to state explicitly that the project is *a
+  layered research sandbox*, not a complete LQG calculation, with
+  the four epistemic registers (pedagogical proxy → minimal qubit
+  quantum-information → single-node SU(2) intertwiner → restricted
+  spin-1/2 projected Bell-network state) named on the surface.
+  Bell-network states, effective geometry, dipole graph, cycle-4
+  graph, SU(2) invariant subspace / intertwiner projector, projected
+  spin-1/2 Bell-network state, the proxy-vs-exact-observable
+  distinction, and the roadmap-only status of area / volume /
+  dihedral-angle operators all surface in the opening callout.
+- **`docs/academic-demo-flow.md`** — new *Suggested framing for a
+  research discussion* section sized for a research audience, with
+  three discussion questions on the **Bell-network → effective
+  geometry** axis: (a) area / volume vs dihedral / Regge sequencing;
+  (b) dipole / cycle-4 truncation suitability for the cosmological
+  sector; (c) which graph-level observable best connects the
+  projected state to effective geometry.
+- **`docs/future-research-roadmap.md`** — new *Bekir Hoca discussion
+  candidates* section with five discussion-ready bullets: area
+  operator, volume operator on intertwiner space, dihedral-angle /
+  twisted-vs-Regge, semiclassical coherent spin-network extension,
+  and the relation to homogeneous graph truncations / cosmology.
+- **`docs/honesty-classes.md`** — Section D ("the boundary") rewritten
+  as five academic claim-envelope statements: *exact within minimal
+  qubit model* / *exact within SU(2) single-node model* / *exact
+  within restricted spin-1/2 projected Bell-network construction* /
+  *not yet an LQG geometric observable* / *not yet a spin-foam or
+  cosmological dynamics model*. Each line names what the engine
+  *can* claim and what it *cannot*.
+- **CLAUDE.md** — changelog entry recording the documentation-only
+  polish.
+
+The release is purely an academic packaging refinement — the engine
+state is the same, the UI is the same, the numerical outputs are the
+same. What changed is *how* the project narrates its own claim
+envelope to a research audience.
+
+## Academic Demo Milestone — Mega Phase 9F (2026-04-25)
+
+The engine has reached a coherent stopping point and is now packaged for
+academic presentation. **No engine, UI, or numerical-output changes** —
+this milestone is documentation-only. What the project now ships:
+
+**Four exact engine layers** (84/84 selftests clean):
+
+- **Tier 1** — pedagogical proxy diagnostics on the canvas + Geometry
+  Lab.
+- **Tier 2** — minimal qubit quantum-information layer (density
+  matrices, partial traces, von Neumann entropy via Jacobi
+  eigendecomposition, exact pairwise mutual information; per-qubit
+  entropy heatmap and exact MI heatmap visible in Correlation Summary).
+- **Tier 3** — single-node SU(2) representation theory: spin-`j`
+  matrices and Casimir, tensor-product spin spaces, total-`J²`
+  eigendecomposition, SU(2)-invariant subspace projector for any
+  spin tuple at one node. Surfaced as the **Single-node SU(2)
+  Intertwiner Sandbox** with four textbook examples.
+- **Tier 4** — spin-1/2 projected Bell-network states for the
+  two-node single-edge graph (minimal prototype), dipole, and
+  cycle-4 graphs. Construction:
+  `|Ψ_Γ⟩ = (⊗_node P_inv) · (⊗_edge |S⟩) / norm`. Surfaced as the
+  **Bell-network Graph Sandbox** with all three canonical graphs
+  marked `available`.
+
+**Documentation layer added** in `docs/`:
+
+- [`docs/academic-demo-flow.md`](./docs/academic-demo-flow.md) — 5–7
+  minute Geometry Lab walkthrough mapped to the four tiers, with
+  discussion questions for the audience.
+- [`docs/honesty-classes.md`](./docs/honesty-classes.md) — canonical
+  reference for which register is allowed to claim what (four
+  ProxyBadge kinds, three engine honesty literals, three UI model
+  chips, and an explicit "what you cannot say" boundary).
+- [`docs/future-research-roadmap.md`](./docs/future-research-roadmap.md)
+  — three-horizon plan: near-term (area / volume / dihedral on the
+  projected state), mid-term (arbitrary-spin Wigner-3j /
+  twisted-vs-Regge), long-term (spin-foam vertex amplitude /
+  cosmology / refinement / coherent intertwiners).
+
+**README.md** and **README.tr.md** gained a parallel
+*Academic Scope: Bell-Network Geometry Lab* section listing the four
+tiers, an exact / proxy / future-LQG comparison table, and links to
+the three companion docs.
+
+**No engine code, UI logic, or i18n key changes.** Engine selftest
+remains 84/84. UI numeric outputs are byte-identical to Mega Phase
+9E-4. The release is purely an academic packaging step — making the
+existing engine state demonstrable to a research audience without
+inflating any claim envelope.
+
 ## v0.5 — First public-ready cut
 
 The first version packaged for public sharing. Everything runs in the browser — no
